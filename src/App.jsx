@@ -1,35 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const App = () => {
+  const [user, setUser] = useState([])
+  const [search, setSearch] = useState("")
+  const [filteredUser, setFilterUser] = useState([])
+
+  const [loading, setloading] = useState(true)
+  function searchBtn() {
+    const result = user.filter((users) => (users?.name.toLowerCase().includes(search.toLocaleLowerCase())))
+    setFilterUser(result)
+  }
+  function allCard() {
+    const result = user.filter((user) => (user?.id > 0))
+    setFilterUser(result)
+  }
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        setUser(res?.data)
+        setFilterUser(res?.data)
+        setloading(false)
+
+
+      })
+      .catch((err) => {
+        console.log("Error fetching useres", err);
+
+      })
+  }, [])
+
+
+
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <p className="text-2xl font-bold">Loading...</p>
+        </div>
+      ) : (
+        <div className="bg-gray-400 pt-8">
+          <div className=" flex flex-row justify-center gap-3"><input className="border-none bg-gray-300 outline-none px-4 w-90 rounded-lg py-2" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <button className="bg-gray-800 w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={searchBtn}>Search</button>
+            <div className="flex flex-col justify-center items-center  w-20 rounded-lg text-red-500 font-bold cursor-pointer group  ">
+              <p className="bg-gray-800"   >category</p>
+
+              <div>
+                <ul className="hidden group-hover:block" >
+                  <li><button className="bg-gray-800 w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={allCard}>All</button></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800 mt-10">User Index</h1>
+          </div>
+          <div className="flex flex-wrap justify-center w-[100%]" >
+            {
+              filteredUser.map((users) => (<Link to={`/user/${users.id}`} key={users.id}>
+                <div className="m-4 p-4 bg-gray-800  text-center sm:w-90 w-40 h-60 text-red-500 rounded-lg " >
+                  <p className="bg-gray-50 w-8 h-8  rounded-full flex justify-center items-center font-bold text-2xl">{users?.id}</p>
+                  <p className="text-lg font-bold mt-5">{users?.name}</p>
+                  <p className="text-gray-50 font-serif mt-2">@{users?.username}</p>
+                  <p className="text-gray-50 font-serif mt-2">📩 {users?.email}</p>
+                  <p className="text-gray-50 font-serif mt-2">📍 {users?.address?.city}</p>
+                </div></Link>))
+            }
+
+          </div>
+
+        </div>
+      )}
+
     </>
   )
 }
-
 export default App
