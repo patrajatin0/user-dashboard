@@ -130,7 +130,7 @@ const App = () => {
         <div className="bg-gray-400 pt-8 min-h-screen">
 
           <div className="flex flex-wrap justify-center gap-2 px-4">
-            <div className="flex flex-row justify-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-row flex-wrap justify-center gap-3 w-full sm:w-auto">
               <input
                 className="border-none bg-gray-300 outline-none px-4 flex-1 sm:w-72 md:w-90 rounded-lg py-2"
                 type="text"
