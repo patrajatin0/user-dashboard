@@ -43,21 +43,24 @@ const App = () => {
           <p className="text-2xl font-bold">Loading...</p>
         </div>
       ) : (
+
         <div className="bg-gray-400 pt-8">
-          <div className=" flex flex-row justify-center gap-3"><input className="border-none bg-gray-300 outline-none px-4 w-90 rounded-lg py-2" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-            <button className="bg-gray-800 w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={searchBtn}>Search</button>
-            <div className="flex flex-col justify-center items-center  w-20 rounded-lg text-red-500 font-bold cursor-pointer group  ">
-              <p className="bg-gray-800"   >category</p>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            <div className=" flex flex-row justify-center gap-3"><input className="border-none bg-gray-300 outline-none px-4 w-90 rounded-lg py-2" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
+              <button className="bg-gray-800 w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={searchBtn}>Search</button>
+
+            </div>
+            <div className="flex flex-col justify-center items-center  w-20 rounded-lg text-red-500 font-bold cursor-pointer group relative bg-gray-800 ">
+              <p className="  "   >category</p>
 
               <div>
-                <ul className="hidden group-hover:block" >
-                  <li><button className="bg-gray-800 w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={allCard}>All</button></li>
+                <ul className="hidden sm:group-hover:block group-active:block absolute bg-gray-800 m-2 rounded" >
+                  <li><button className=" w-20 rounded-lg text-red-500 font-bold cursor-pointer " onClick={allCard}>All</button></li>
                 </ul>
               </div>
             </div>
-
           </div>
-
 
           <div>
             <h1 className="text-4xl font-bold text-gray-800 mt-10">User Index</h1>
@@ -69,7 +72,7 @@ const App = () => {
                   <p className="bg-gray-50 w-8 h-8  rounded-full flex justify-center items-center font-bold text-2xl">{users?.id}</p>
                   <p className="text-lg font-bold mt-5">{users?.name}</p>
                   <p className="text-gray-50 font-serif mt-2">@{users?.username}</p>
-                  <p className="text-gray-50 font-serif mt-2">📩 {users?.email}</p>
+                  <p className="text-gray-50 font-serif mt-2 text-sm sm:text-lg">📩 {users?.email}</p>
                   <p className="text-gray-50 font-serif mt-2">📍 {users?.address?.city}</p>
                 </div></Link>))
             }
