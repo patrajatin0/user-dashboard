@@ -75,6 +75,7 @@ const User = () => {
         <> {upadate ? (
             <div className="flex justify-center items-center h-screen">
                 <p className="text-2xl font-bold">Loading...</p>
+
             </div>
         ) : (
             <div className="bg-gray-400 min-h-screen pt-16 sm:pt-24 md:pt-40 px-4">
